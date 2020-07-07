@@ -33,8 +33,8 @@ class PieChart extends AbstractChart<PieChartProps, PieChartState> {
 
     const chart = Pie({
       center: this.props.center || [0, 0],
-      r: 0,
-      R: this.props.height / 2.5,
+      r: this.props.height / 3.4,
+      R: this.props.height / 2.8,
       data: this.props.data,
       accessor: x => {
         return x[this.props.accessor];
@@ -54,8 +54,20 @@ class PieChart extends AbstractChart<PieChartProps, PieChartState> {
         if (total === 0) {
           value = 0 + "%";
         } else {
-          value = Math.round((100 / total) * c.item[this.props.accessor]) + "%";
+          value =
+            Math.fround((100 / total) * c.item[this.props.accessor]).toFixed(
+              2
+            ) + "%";
         }
+      }
+
+      const positionT = this.props.height * (this.props.data.length * 0.12);
+
+      let paddingTop: number;
+      if (this.props.data.length < 5) {
+        paddingTop = (5 - this.props.data.length) * 12 - 6;
+      } else {
+        paddingTop = -6;
       }
 
       return (
@@ -66,13 +78,14 @@ class PieChart extends AbstractChart<PieChartProps, PieChartState> {
               width="16px"
               height="16px"
               fill={c.item.color}
-              rx={8}
-              ry={8}
-              x={this.props.width / 2.5 - 24}
+              rx={4}
+              ry={4}
+              x={this.props.width / 3.4 - 32}
               y={
-                -(this.props.height / 2.5) +
-                ((this.props.height * 0.8) / this.props.data.length) * i +
-                12
+                -(this.props.height / 3.4) +
+                (positionT / this.props.data.length) * i +
+                12 +
+                paddingTop
               }
             />
           ) : null}
@@ -80,14 +93,15 @@ class PieChart extends AbstractChart<PieChartProps, PieChartState> {
             <Text
               fill={c.item.legendFontColor}
               fontSize={c.item.legendFontSize}
-              x={this.props.width / 2.5}
+              x={this.props.width / 3.4 - 8}
               y={
-                -(this.props.height / 2.5) +
-                ((this.props.height * 0.8) / this.props.data.length) * i +
-                12 * 2
+                -(this.props.height / 3.4) +
+                (positionT / this.props.data.length) * i +
+                12 * 2 +
+                paddingTop
               }
             >
-              {`${value} ${c.item.name}`}
+              {`${c.item.name}   ${value}`}
             </Text>
           ) : null}
         </G>
@@ -126,6 +140,15 @@ class PieChart extends AbstractChart<PieChartProps, PieChartState> {
             y={this.props.height / 2}
           >
             {slices}
+          </G>
+
+          <G
+            x={this.props.width / 2 / 2 - this.props.center[0] / 2 - 6}
+            y={this.props.height / 2 + 6}
+          >
+            <Text fill={"#222222"} textAnchor={"middle"} fontSize={12}>
+              100092 만원
+            </Text>
           </G>
         </Svg>
       </View>
