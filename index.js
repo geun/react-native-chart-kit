@@ -6,6 +6,7 @@ import ProgressChart from "./src/progress-chart";
 import ContributionGraph from "./src/contribution-graph";
 import StackedBarChart from "./src/stackedbar-chart";
 
+export * from "./src/HelperTypes";
 export {
   AbstractChart,
   BarChart,
