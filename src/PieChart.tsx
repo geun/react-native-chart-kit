@@ -149,7 +149,7 @@ class PieChart extends AbstractChart<PieChartProps, PieChartState> {
               y={this.props.height / 2 + 6}
             >
               <Text fill={"#222222"} textAnchor={"middle"} fontSize={12}>
-                {this.props.totalValue} 만원
+                {this.props.totalValue}
               </Text>
             </G>
           )}
