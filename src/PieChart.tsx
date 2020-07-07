@@ -6,6 +6,7 @@ import { G, Path, Rect, Svg, Text } from "react-native-svg";
 import AbstractChart, { AbstractChartProps } from "./AbstractChart";
 
 export interface PieChartProps extends AbstractChartProps {
+  totalValue?: string;
   data: Array<any>;
   width: number;
   height: number;
@@ -142,14 +143,16 @@ class PieChart extends AbstractChart<PieChartProps, PieChartState> {
             {slices}
           </G>
 
-          <G
-            x={this.props.width / 2 / 2 - this.props.center[0] / 2 - 6}
-            y={this.props.height / 2 + 6}
-          >
-            <Text fill={"#222222"} textAnchor={"middle"} fontSize={12}>
-              100092 만원
-            </Text>
-          </G>
+          {this.props.totalValue && (
+            <G
+              x={this.props.width / 2 / 2 - this.props.center[0] / 2 - 6}
+              y={this.props.height / 2 + 6}
+            >
+              <Text fill={"#222222"} textAnchor={"middle"} fontSize={12}>
+                {this.props.totalValue} 만원
+              </Text>
+            </G>
+          )}
         </Svg>
       </View>
     );
